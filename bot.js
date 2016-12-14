@@ -10,6 +10,7 @@ const request = require("request");
 
 const FB = require("./facebook.js");
 const Config = require("./const.js");
+const Dashboard = require("./dashboard.js");
 
 let Wit = null;
 let log = null;
@@ -158,6 +159,9 @@ const actions = {
                     } else {
                         context.information = "Connection Error: "+ response.statusCode;
                     }
+					
+					Dashboard.docWriteIssue("Answer to the question: " + searchQuery, "## The user asked about: _" + searchQuery +"_\n## This is the answer of the bot:\n\n" + context.information, [ "getInformation" ], "258callthebot");
+					
                     return resolve(context);
                 });
             } else {
